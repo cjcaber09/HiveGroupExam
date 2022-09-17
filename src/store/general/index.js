@@ -1,6 +1,7 @@
 import getters from "./getters";
 const state = {
-  appbarView: true,
+  // appbarView: token ? true : false,
+  token: "",
 };
 
 export default {

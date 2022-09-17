@@ -5,7 +5,7 @@
       <NavigationBarVue></NavigationBarVue>
     </div>
     <v-main>
-      <v-container grid-list-xs>
+      <v-container grid-list-xs class="pt-10 px-10">
         <router-view />
       </v-container>
     </v-main>

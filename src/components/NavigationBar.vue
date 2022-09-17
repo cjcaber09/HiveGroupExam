@@ -54,8 +54,13 @@ export default {
           icon: "mdi-card-account-phone",
         },
         {
-          routeName: "Friends",
+          routeName: "Friend list",
           route: "/friends",
+          icon: "mdi-account-star",
+        },
+        {
+          routeName: "Users",
+          route: "/users",
           icon: "mdi-account-multiple",
         },
       ],

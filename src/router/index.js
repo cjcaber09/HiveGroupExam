@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard";
 import Users from "../views/Users";
+import Profile from "../views/Profile";
+import Contacts from "../views/Contacts";
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,16 @@ const routes = [
     path: "/users",
     name: "Users",
     component: Users,
+  },
+  {
+    path: "/contacts",
+    name: "Contacts",
+    component: Contacts,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 
