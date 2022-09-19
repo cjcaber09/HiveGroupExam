@@ -4,8 +4,9 @@ const getData = (state) => {
 const getContacts = (state) => {
   return state.userData.contact_details;
 };
-const isAdmin = (state) => {
-  return state.userData.type == "admin" ? true : false;
+const isAdmin = () => {
+  let userdata = JSON.parse(window.localStorage.getItem("user"));
+  return userdata.type == "admin" ? true : false;
 };
 
 export default {

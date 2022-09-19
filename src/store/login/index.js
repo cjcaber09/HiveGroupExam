@@ -3,7 +3,7 @@ import mutations from "./mutations";
 import getters from "./getters";
 
 const state = {
-  userData: {},
+  userData: JSON.parse(window.localStorage.getItem("user")),
 };
 
 export default {

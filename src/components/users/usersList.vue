@@ -1,9 +1,16 @@
 <template>
   <div>
     <v-card class="py-10 px-10">
-      <v-row>
-        <v-col cols="6" v-for="item in usersList" :key="item.id">
+      <v-row grid-list-xs>
+        <v-col
+          cols="12"
+          sm="12"
+          lg="6"
+          v-for="item in usersList"
+          :key="item.id"
+        >
           <user :data="item"></user>
+          <hr class="mt-2" />
         </v-col>
       </v-row>
     </v-card>

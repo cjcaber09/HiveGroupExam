@@ -9,7 +9,8 @@ const Register = ({ commit }, payload) => {
       .then((result) => {
         if (result.status == 200) {
           window.localStorage.setItem("token", result.data.token);
-          window.localStorage.setItem("user", result.data.user);
+          window.localStorage.setItem("user", JSON.stringify(result.data.user));
+
           commit("SetUser", result.data.user);
           resolve(result.data);
         }
@@ -24,6 +25,7 @@ const LoginUser = ({ commit }, payload) => {
       .post(`${config.baseURL}login`, payload, config.axiosHeader)
       .then((result) => {
         if (result.status == 200) {
+          window.localStorage.setItem("user", JSON.stringify(result.data.user));
           window.localStorage.setItem("token", result.data.token);
           commit("SetUser", result.data);
           resolve(result.data);
@@ -38,6 +40,7 @@ const fetchUserProfile = ({ commit }, payload) => {
       .get(`${config.baseURL}login/user`, config.axiosAuthHeader)
       .then((result) => {
         if (result.status == 200) {
+          window.localStorage.setItem("user", JSON.stringify(result.data));
           commit("SetUser", result.data);
           resolve(result.data);
         }

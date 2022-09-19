@@ -11,7 +11,11 @@
     </v-main>
   </v-app>
 </template>
-
+<style>
+.v-card {
+  border: 1px solid #f0b52f;
+}
+</style>
 <script>
 import AppBarVue from "./components/AppBar.vue";
 import NavigationBarVue from "./components/NavigationBar.vue";

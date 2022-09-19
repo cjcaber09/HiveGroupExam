@@ -11,7 +11,46 @@ const FetchUsers = ({ commit }, payload) => {
     });
   });
 };
-
+const PromoteUser = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(`${config.baseURL}users/promote`, payload, config.axiosAuthHeader)
+      .then((result) => {
+        if (result.status == 200) {
+          resolve(result);
+        }
+      });
+  });
+};
+const DemoteUser = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(`${config.baseURL}users/demote`, payload, config.axiosAuthHeader)
+      .then((result) => {
+        if (result.status == 200) {
+          resolve(result);
+        }
+      });
+  });
+};
+const requestAsFriend = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    console.log(payload._id);
+    axios
+      .patch(
+        `${config.baseURL}users/friend/${payload._id}`,
+        payload.user,
+        config.axiosAuthHeader
+      )
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => reject(err.response));
+  });
+};
 export default {
   FetchUsers,
+  PromoteUser,
+  DemoteUser,
+  requestAsFriend,
 };
