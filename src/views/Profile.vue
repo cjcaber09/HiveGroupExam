@@ -10,7 +10,11 @@
       <v-col cols="12" lg="5">
         <v-tabs-items v-model="activeTab">
           <v-tab-item class="mx-5">
-            <AccountProfile></AccountProfile>
+            <AccountProfile
+              :data="userData"
+              :profile="userData.profile_details"
+              v-if="userData"
+            ></AccountProfile>
           </v-tab-item>
           <v-tab-item class="mx-5">
             <Address></Address>
@@ -31,6 +35,15 @@ import AccountProfile from "../components/profile/accountProfile.vue";
 import Address from "../components/profile/address.vue";
 import Contacts from "../components/profile/contacts.vue";
 export default {
+  beforeCreate() {
+    this.$store.dispatch("Login/fetchUserProfile");
+  },
+  computed: {
+    userData() {
+      let data = this.$store.getters["Login/getData"];
+      return data;
+    },
+  },
   methods: {
     setNewTab(a) {
       this.activeTab = a;

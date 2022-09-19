@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="contactData">
     <v-row>
       <v-col cols="12">
         <div class="text-h6 font-weight-bold">
@@ -13,7 +13,8 @@
         <v-text-field
           solo
           :name="item.model"
-          :placeholder="item.placeholder"
+          :placeholder="item.label"
+          v-model="contactInputs[item.model]"
         ></v-text-field>
       </v-col>
       <!-- <v-col cols="12">Emergency Infomation</v-col>
@@ -31,8 +32,34 @@
 </template>
 <script>
 export default {
+  computed: {
+    contactData() {
+      let data = this.$store.getters["Login/getContacts"];
+      return data;
+    },
+  },
+  watch: {
+    contactData() {
+      console.log(this.contactData);
+    },
+  },
+  mounted() {
+    let contact = this.contactData;
+    this.contactInputs = {
+      home: contact.home,
+      work: contact.work,
+      phone: contact.phone,
+      telephone: contact.telephone,
+    };
+  },
   data() {
     return {
+      contactInputs: {
+        home: "",
+        phone: "",
+        work: "",
+        telephone: "",
+      },
       emergencyContact: [
         {
           label: "",
@@ -47,19 +74,19 @@ export default {
         },
         {
           label: "Home number",
-          model: "phone",
+          model: "home",
           type: "text",
           rules: [],
         },
         {
           label: "Work number",
-          model: "phone",
+          model: "work",
           type: "text",
           rules: [],
         },
         {
           label: "Telephone number",
-          model: "phone",
+          model: "telephone ",
           type: "text",
           rules: [],
         },

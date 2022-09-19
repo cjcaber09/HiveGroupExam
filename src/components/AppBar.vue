@@ -7,8 +7,20 @@
       <div class="ml-3 font-weight-bold">Jane Doe</div>
       <v-spacer></v-spacer>
       <div class="mr-3">
-        <v-btn color="secondary"><v-icon>mdi-logout</v-icon> Logout</v-btn>
+        <v-btn color="secondary" @click="logoutUser"
+          ><v-icon>mdi-logout</v-icon> Logout</v-btn
+        >
       </div>
     </v-app-bar>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    logoutUser() {
+      window.localStorage.removeItem("token");
+      this.$router.go("/login");
+    },
+  },
+};
+</script>

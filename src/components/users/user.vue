@@ -8,10 +8,10 @@
       </v-col>
       <v-col cols="6" class="mt-2">
         <div class="text-body-1 font-weight-bold">
-          Jane Doe
+          {{ data.profile_details.fname }} {{ data.profile_details.lname }}
         </div>
         <div class="text-subtitle-2">
-          Supervisor
+          {{ data.type.toUpperCase() }}
         </div>
       </v-col>
       <v-col cols="2" class="mt-2"
@@ -22,3 +22,8 @@
     </v-row>
   </div>
 </template>
+<script>
+export default {
+  props: ["data"],
+};
+</script>

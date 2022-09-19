@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card class="py-5 px-10">
+    <v-card class="py-10 px-10">
       <v-row>
-        <v-col cols="6" v-for="item in 10" :key="item.id">
-          <user></user>
+        <v-col cols="6" v-for="item in usersList" :key="item.id">
+          <user :data="item"></user>
         </v-col>
       </v-row>
     </v-card>
@@ -12,6 +12,12 @@
 <script>
 import user from "../users/user.vue";
 export default {
+  computed: {
+    usersList() {
+      return this.$store.getters["Users/GetUsers"];
+    },
+  },
+
   components: {
     user,
   },

@@ -11,7 +11,7 @@
         <v-text-field
           solo
           :name="item.model"
-          :placeholder="item.placeholder"
+          :placeholder="item.label"
         ></v-text-field>
       </v-col>
       <v-col cols="12"><v-btn color="primary">Save</v-btn> </v-col>
@@ -21,6 +21,25 @@
 
 <script>
 export default {
+  computed: {
+    userData() {
+      let data = this.$store.getters["Login/getData"];
+      return data;
+    },
+  },
+  watch: {
+    userData() {
+      let profile_details = this.userData.address_details;
+      this.textInputs = {
+        houseNum: profile_details.houseNum,
+        street: profile_details.street,
+        city: profile_details.city,
+        state: profile_details.state,
+        country: profile_details.country,
+        zip: profile_details.zip,
+      };
+    },
+  },
   data() {
     return {
       addressText: [
