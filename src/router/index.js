@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard";
 import Users from "../views/Users";
 import Profile from "../views/Profile";
-import Contacts from "../views/Contacts";
+import Contacts from "../views/Friends";
 
 Vue.use(VueRouter);
 

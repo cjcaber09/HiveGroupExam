@@ -10,8 +10,13 @@ const axiosAuthHeader = {
     Authorization: "Bearer " + window.localStorage.getItem("token"),
   },
 };
+const DeleteHeader = {
+  "Content-Type": "Application/json",
+  Authorization: "Bearer " + window.localStorage.getItem("token"),
+};
 export default {
   baseURL,
   axiosHeader,
   axiosAuthHeader,
+  DeleteHeader,
 };

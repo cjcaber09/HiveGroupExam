@@ -13,19 +13,23 @@
         <div class="text-subtitle-2">
           {{ data.type.toUpperCase() }}
         </div>
-        <div v-if="isAdmin">
+        <div class="text-subtitle-2">
+          {{ data.username }}
+        </div>
+
+        <div v-if="canChangeRanks">
           <v-btn
             icon
             color="primary"
             @click="promoteUser(data)"
-            v-if="data.type != 'admin'"
+            v-if="canPromote(data.type)"
           >
             <v-icon>mdi-account-arrow-up</v-icon>
           </v-btn>
           <v-btn
             icon
             color="secondary"
-            v-if="data.type != 'user'"
+            v-if="canDemote(data.type)"
             @click="demoteUser(data)"
           >
             <v-icon>mdi-account-arrow-down</v-icon>
@@ -34,15 +38,18 @@
       </v-col>
       <v-col cols="12" sm="12" lg="2" class="mt-2 mb-5"
         ><v-btn
-          v-if="!requestedAsFriend"
+          v-if="!requestedAsFriend && !PendingFriendRequest"
           color="secondary"
           @click="requestAsFriend(data)"
           ><v-icon class="mr-2">mdi-account-plus</v-icon>Add as friend</v-btn
         >
+        <v-btn v-else-if="PendingFriendRequest" color="error"
+          ><v-icon class="mr-2">mdi-account-clock</v-icon>Needs Response</v-btn
+        >
         <v-btn v-else color="secondary" disabled
           ><v-icon class="mr-2">mdi-account-clock</v-icon>Request sent</v-btn
-        ></v-col
-      >
+        >
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -50,6 +57,13 @@
 const _ = require("underscore");
 export default {
   methods: {
+    canPromote(data) {
+      console.log(this.canPromoteUpto);
+      return _.indexOf(this.canPromoteUpto, data) == -1 ? false : true;
+    },
+    canDemote(data) {
+      return _.indexOf(this.canDemoteUpto, data) == -1 ? false : true;
+    },
     requestAsFriend(user) {
       this.$store
         .dispatch("Users/requestAsFriend", {
@@ -82,17 +96,39 @@ export default {
   },
 
   computed: {
+    canPromoteUpto() {
+      return this.currentUser.type == "admin"
+        ? ["user", "supervisor"]
+        : ["user"];
+    },
+    canDemoteUpto() {
+      return this.currentUser.type == "admin"
+        ? ["admin", "supervisor"]
+        : ["supervisor"];
+    },
     requestedAsFriend() {
       let found = _.where(this.currentUser.friends, {
         friend_id: this.data._id,
       });
       return found.length > 0 ? true : false;
     },
+    PendingFriendRequest() {
+      let requested = _.where(this.currentUser.friendLists, {
+        requested: this.data._id,
+      });
+      let requestor = _.where(this.currentUser.friendLists, {
+        requestor: this.data._id,
+      });
+      return requestor.length > 0 || requested.length > 0 ? true : false;
+    },
     currentUser() {
       return this.$store.getters["Login/getData"];
     },
-    isAdmin() {
-      return this.$store.getters["Login/isAdmin"];
+    canChangeRanks() {
+      return this.currentUser.type == "admin" ||
+        this.currentUser.type == "supervisor"
+        ? true
+        : false;
     },
   },
   data() {

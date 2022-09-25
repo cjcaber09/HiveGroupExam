@@ -49,15 +49,11 @@ export default {
           icon: "mdi-account",
         },
         {
-          routeName: "Contacts",
+          routeName: "Friend list",
           route: "/contacts",
           icon: "mdi-card-account-phone",
         },
-        {
-          routeName: "Friend list",
-          route: "/friends",
-          icon: "mdi-account-star",
-        },
+
         {
           routeName: "Users",
           route: "/users",

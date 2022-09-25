@@ -35,7 +35,6 @@ const DemoteUser = ({ commit }, payload) => {
 };
 const requestAsFriend = ({ commit }, payload) => {
   return new Promise((resolve, reject) => {
-    console.log(payload._id);
     axios
       .patch(
         `${config.baseURL}users/friend/${payload._id}`,
@@ -48,9 +47,58 @@ const requestAsFriend = ({ commit }, payload) => {
       .catch((err) => reject(err.response));
   });
 };
+const UpdateAddress = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(
+        `${config.baseURL}users/address/${payload._id}`,
+        { address: payload.address },
+        config.axiosAuthHeader
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          resolve(res.data);
+        }
+      });
+  });
+};
+const UpdateContact = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(
+        `${config.baseURL}users/contacts/${payload._id}`,
+        { contacts: payload.contacts },
+        config.axiosAuthHeader
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          resolve(res.data);
+        }
+      });
+  });
+};
+
+const FetchFriendRequests = ({ commit }, payload) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `${config.baseURL}users/friends/${payload.id}/pending`,
+        config.axiosAuthHeader
+      )
+      .then((result) => {
+        if (result.status == 200) {
+          commit("setFriendRequests", result.data);
+          resolve(result.data);
+        }
+      });
+  });
+};
 export default {
   FetchUsers,
   PromoteUser,
   DemoteUser,
   requestAsFriend,
+  UpdateAddress,
+  UpdateContact,
+  FetchFriendRequests,
 };

@@ -1,33 +1,29 @@
 <template>
   <div v-if="contactData">
-    <v-row>
-      <v-col cols="12">
-        <div class="text-h6 font-weight-bold">
-          Contact Information
-        </div>
-      </v-col>
-      <v-col cols="12">Personal Contact Infomation</v-col>
+    <v-form ref="contact"
+      ><v-row>
+        <v-col cols="12">
+          <div class="text-h6 font-weight-bold">
+            Contact Information
+          </div>
+        </v-col>
+        <v-col cols="12">Personal Contact Infomation</v-col>
 
-      <v-col cols="6" v-for="(item, index) in contactText" :key="index">
-        <div class="text-subtitle-2">{{ item.label }}:</div>
-        <v-text-field
-          solo
-          :name="item.model"
-          :placeholder="item.label"
-          v-model="contactInputs[item.model]"
-        ></v-text-field>
-      </v-col>
-      <!-- <v-col cols="12">Emergency Infomation</v-col>
-      <v-col cols="6" v-for="(item, index) in contactText" :key="index">
-        <div class="text-subtitle-2">{{ item.label }}:</div>
-        <v-text-field
-          solo
-          :name="item.model"
-          :placeholder="item.placeholder"
-        ></v-text-field>
-      </v-col> -->
-      <v-col cols="12"><v-btn color="primary">Save</v-btn> </v-col>
-    </v-row>
+        <v-col cols="6" v-for="(item, index) in contactText" :key="index">
+          <div class="text-subtitle-2">{{ item.label }}:</div>
+          <v-text-field
+            solo
+            :name="item.model"
+            :placeholder="item.label"
+            v-model="contactInputs[item.model]"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12"
+          ><v-btn color="primary" @click="saveContacts">Save</v-btn>
+        </v-col>
+      </v-row></v-form
+    >
   </div>
 </template>
 <script>
@@ -37,10 +33,24 @@ export default {
       let data = this.$store.getters["Login/getContacts"];
       return data;
     },
+    userData() {
+      let data = this.$store.getters["Login/getData"];
+      return data;
+    },
   },
-  watch: {
-    contactData() {
-      console.log(this.contactData);
+  methods: {
+    saveContacts() {
+      console.log(this.contactInputs);
+      if (this.$refs.contact.validate()) {
+        this.$store
+          .dispatch("Users/UpdateContact", {
+            _id: this.userData._id,
+            contacts: this.contactInputs,
+          })
+          .then((result) => {
+            this.$store.dispatch("Login/fetchUserProfile");
+          });
+      }
     },
   },
   mounted() {
@@ -86,7 +96,7 @@ export default {
         },
         {
           label: "Telephone number",
-          model: "telephone ",
+          model: "telephone",
           type: "text",
           rules: [],
         },

@@ -31,7 +31,9 @@ export default {
     },
   },
   created() {
-    console.log(this.$store);
+    if (this.isAppbarActive) {
+      this.$store.dispatch("Login/fetchUserProfile");
+    }
   },
 };
 </script>

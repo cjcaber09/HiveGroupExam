@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="2">
+      <v-col cols="12" lg="2">
         <tabComponent
           :currentTab="activeTab"
           @setTab="setNewTab"

@@ -1,11 +1,7 @@
 import actions from "./actions";
 import getters from "./getters";
 import mutations from "./mutations";
-const state = {
-  usersList: [],
-  friendList: [],
-  friendRequests: [],
-};
+const state = { friendList: [] };
 
 export default {
   state,
